@@ -710,7 +710,7 @@ type arrayPathResult struct {
 
 func parseArrayPath(path string) (r arrayPathResult) {
 	for i := 0; i < len(path); i++ {
-		if path[i] == '.' {
+		if path[i] == '|' {
 			r.part = path[:i]
 			r.path = path[i+1:]
 			r.more = true
@@ -719,7 +719,7 @@ func parseArrayPath(path string) (r arrayPathResult) {
 		if path[i] == '#' {
 			r.arrch = true
 			if i == 0 && len(path) > 1 {
-				if path[1] == '.' {
+				if path[1] == '|' {
 					r.alogok = true
 					r.alogkey = path[2:]
 					r.path = path[:1]
@@ -837,7 +837,7 @@ type objectPathResult struct {
 
 func parseObjectPath(path string) (r objectPathResult) {
 	for i := 0; i < len(path); i++ {
-		if path[i] == '.' {
+		if path[i] == '|' {
 			r.part = path[:i]
 			r.path = path[i+1:]
 			r.more = true
@@ -862,7 +862,7 @@ func parseObjectPath(path string) (r objectPathResult) {
 							epart = append(epart, path[i])
 						}
 						continue
-					} else if path[i] == '.' {
+					} else if path[i] == '|' {
 						r.part = string(epart)
 						r.path = path[i+1:]
 						r.more = true
@@ -1392,7 +1392,7 @@ type parseContext struct {
 func Get(json, path string) Result {
 	var i int
 	var c = &parseContext{json: json}
-	if len(path) >= 2 && path[0] == '.' && path[1] == '.' {
+	if len(path) >= 2 && path[0] == '|' && path[1] == '|' {
 		c.lines = true
 		parseArray(c, 0, path[2:])
 	} else {

@@ -30,6 +30,8 @@ $ go get -u github.com/tidwall/gjson
 
 This will retrieve the library.
 
+## IMPORTANT NOTE: change to use (|) instead of dot(.)
+
 ## Get a value
 Get searches json for the specified path. A path is in dot syntax, such as "name.last" or "age". When the value is found it's returned immediately. 
 
